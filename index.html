@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+/* ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3'] */
+
+body {
+  background-color: #ECE7DD;
+}
+
+.person:hover {
+  color: #CF232B;
+  cursor: default;
+}
+
+.sr {
+  fill: none;
+  stroke: #bbb;
+  stroke-width: 1.5;
+}
+  
+.tsp, .amyotha {
+  fill: #ECE7DD;
+  stroke: #eee;
+  stroke-width: 0;
+} 
+  
+.tspInset, .amyothaInset {
+  fill: #ECE7DD;
+  stroke: #bbb;
+  stroke-width: 1;
+}   
+  
+.vt {
+  fill: none;
+  stroke: #80b1d3;
+  stroke-width: 1;
+} 
+  
+.selectable {
+  stroke: #CF232B;
+  stroke-width: 1;
+}
+
+  
+.tooltip  {
+/*	position: absolute;*/
+	top: 3000px;
+	left: 100px;
+  -moz-border-radius:5px;
+	border-radius: 5px;
+  border: 2px solid #000;
+	/* background: #222222; */
+  background: #ECE7DD;
+	opacity: .9;
+	/* color: #eeeeee; */
+  color: black;
+	padding: 10px;
+	width: 200px;
+	font-size: 12px;
+	z-index: 1000;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;     
+}
+
+.tooltip .title {
+	font-size: 13px;
+}
+
+.tooltip .name {
+  font-weight:bold;
+}
+  
+/*
+.sr.Ayeyarwady { fill: #8dd3c7; }
+.sr.Bago { fill: #ffffb3; }
+.sr.Chin { fill: #bebada; }
+.sr.Kachin { fill: #cdc; }
+.sr.Kayah { fill: #80b1d3; }
+.sr.Kayin { fill: #cdc; }
+.sr.Magway { fill: #8dd3c7; }
+.sr.Mon { fill: #bebada; }
+.sr.Rakhine { fill: #cdc; }
+.sr.Sagaing { fill: #80b1d3; }
+.sr.Shan { fill: #ffffb3; }
+.sr.Tanintharyi { fill: #8dd3c7; }
+.sr.Yangon { fill: #bebada; }
+.sr.Mandalay { fill: #cdc; }
+.sr.Naypyitaw { fill: #80b1d3; }
+*/
+  
+body {
+  font-size: 12px;
+  font-family: sans-serif;
+  font-weight: 200;
+  text-anchor: left;
+} 
+ 
+.button {
+    border: none;
+    background-color: #bbb;
+    color: black;
+    font-weight: 300;
+/*    padding: 15px 32px;*/
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+/*    font-size: 16px;*/
+}
+  
+.button:focus {
+    background-color: #CF232B;  
+    color: black;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #CF232B;  
+    color: black;
+}
+  
+  
+.mapContainer {
+  stroke: #bbb;
+  fill: #ECE7DD;
+  margin: 0px;
+  stroke-width: 1;
+  shape-rendering: crisp-edges;
+}
+  
+.subunit-label {
+  fill: #999;
+/*  fill: #333;*/
+  fill-opacity: .99;
+  font-size: 10px;
+  font-family: sans-serif;
+  font-weight: 500;
+  text-anchor: middle;
+}
+  
+.place-label, .place-label-capitals {
+  fill: #777;
+/*  fill: #CF232B;*/
+/*  fill-opacity: .99;*/
+  font-size: 10px;
+  font-family: sans-serif;
+  font-weight: 500;
+  text-anchor: left;
+}
+  
+.place-label-inset {
+/*  fill: #777;*/
+  fill: #CF232B;
+/*  fill-opacity: .99;*/
+  font-size: 11px;
+  font-family: sans-serif;
+  font-weight: 700;
+  text-anchor: left;
+}
+  
+.tsp-label {
+/*  fill: #777;*/
+  fill: #222;
+/*  fill-opacity: .99;*/
+  font-size: 9px;
+  font-family: sans-serif;
+  font-weight: 300;
+  text-anchor: middle;
+}  
+  
+.vt-label {
+  fill: #777;
+/*  fill: #222;*/
+/*  fill-opacity: .99;*/
+  font-size: 8px;
+  font-family: sans-serif;
+  font-weight: 300;
+  text-anchor: middle;
+}   
+
+.hidden { display: none; }  
+  
+.annotation circle {
+  fill: none;
+  stroke: black;
+}
+
+.annotation path {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.annotation text {
+  text-shadow: -2px 0 2px #fff, 
+                0 2px 2px #fff,
+                2px 0 2px #fff, 
+                0 -2px 2px #fff;
+}  
+  
+.annotePath {
+  stroke-width: 1px;
+} 
+.annoteCircle {
+  stroke-width: 1px;
+}
+  
+.yaxis path{
+  display: none;
+}
+
+.yaxis line {
+    fill: none;
+    stroke: black;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis text {
+    font-size: 12px;
+    z-index: 10;
+    padding: 8px;
+}  
+  
+.legendTitle {
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 10;
+    padding: 8px;
+}
+
+.mainTitle {
+    font-size: 16px;
+    z-index: 10;
+    padding: 8px;
+    text-align: center;
+} 
+.subTitle {
+  font-size: 14px;
+/*  width: 100%;*/
+  z-index: 10;
+  padding: 8px;
+  text-align: center;
+  padding: 10px 50px;
+} 
+.subtitleMap {
+  font-size:12px;
+}  
+.mapCell {
+  padding: 0px 0px;
+  text-align: center;
+}
+  
+.infoCell {
+  padding: 50px 50px;
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  height: 500px;
+}  
+  
+#cell0 {
+  display: inline-block;
+}
+  
+#cellSittwe, #cellThandwe, #cellButhidaung {
+  font-size: 18px;
+  padding-top: 50px;
+}
+
+#legend {
+  padding-left: 0px;
+  padding-top: 0px;
+  font-size: 15px;
+  float: left;
+  display: inline-block;
+}
+  
+#legend1 {
+  padding-left: 0px;
+  padding-top: 0px;
+  padding-bottom: 50px;
+  font-size: 15px;
+  display: inline-block;
+  vertical-align: top;
+}
+  
+.locationList {
+  padding: 0px 25px;
+  font-size: 15px;
+  width: 33%;
+  vertical-align: top;
+}  
+  
+.row {
+  float:left;
+/*  width: 500px;*/
+/*  overflow: auto;*/
+/*    white-space: nowrap;*/
+}
+  
+</style>
+<body>
+
+  
+<div class="mainTitle">Contested Seats for 2017 By-Election </div>  
+<br/>
+<!--<div id="#vis"></div>-->
+<!--
+<label>
+  <input type="checkbox" checked="true">
+  Hide controls
+</label> 
+-->
+
+
+<div class="mapCell">
+  <button name="updateButtonAmyotha" id="updateButtonAmyotha" class="button"/>Amyotha</button> 
+  <button name="updateButtonPyithu" id="updateButtonPyithu" class="button"/>Pyithu</button> 
+  <button name="updateButtonSR" id="updateButtonSR" class="button"/> State/Region</button>
+<div class="subTitle" id="houseLabel"></div>
+(click on map and candidate names to see details)
+  <br/>
+<div id="cell0"> </div>
+<div class="infoCell" id="cell1">
+  <div id="infoCellTitle"></div>
+</div>
+</div>
+<div id="legend1">
+</div>
+
+<!--
+<div id="popup" class="popup-wrapper hide">
+  <div class="popup-content">
+    <div class="popup-title">
+      <button type="button" class="popup-close">&times;</button>
+      <h3>Popup Title</h3>
+    </div>
+    <div class="popup-body">
+      <p>Popup body</p>
+    </div>
+  </div>
+</div>
+-->
+  
+<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
+<script src="scripts/topojson.v1.min.js"></script>
+<script src="scripts/d3-ring-note.js"></script>
+<script>
+  
+var width = 200,
+    height = 2000;
+
+//////// Legend /////////
+
+
+var legendHeight = 200;
+var svgLegend = d3.select("#legend").append("svg")
+  .attr("height", legendHeight+100);  
+  
+  
+svgLegend.append("g").append("text")
+    .attr("class", "legendTitle")
+    .attr("transform", "translate(150,100)")
+    .text("Legend:");
+  
+
+var mapFillColor = "#CF232B";
+var mapBlankColor = "#ECE7DD";
+
+
+  
+
+
+  
+  
+ 
+  
+//////// Start declaring viz /////////  
+  
+//var svg = d3.select("body").append("svg")
+//    .attr("width", width)
+//    .attr("height", height);  
+  
+var svgSubMaps={};
+
+var subWidth = width;
+var subHeight = height/4;
+  
+var placeR = 15;
+var placeRInset = 3;
+  
+var numFormat = d3.format(",");
+
+var amyothaDistricts = [
+  {
+  "pcode": "MMR004HLA003",
+  "name": "Chin-3"
+  },
+  {
+  "pcode":"MMR007HLA004",
+  "name": "Bago-4"
+  },
+  {
+  "pcode":"MMR013HLA006",
+  "name": "Yangon-6"
+  }
+];
+  
+var amyothaDistrictsPc = amyothaDistricts.map(function(d){return d.pcode;});
+
+var pyithuDistricts = [
+  {//
+  "pcode": "MMR005012",
+  "name": "Monywa"
+  },
+  {//
+  "pcode": "MMR011003",
+  "name": "Chaungzon"
+  },
+  {//
+  "pcode": "MMR012014",
+  "name": "Ann"
+  },
+  {//
+  "pcode": "MMR013008",
+  "name": "Hlaingtharya"
+  },
+  {//
+  "pcode": "MMR013020",
+  "name": "Dagon Myothit (East)"
+  },
+  {//
+  "pcode": "MMR013021",
+  "name": "Dagon Myothit (Seikkan)"
+  },
+  {//
+  "pcode": "MMR013028",
+  "name": "Kawhmu"
+  },
+  { //
+  "pcode": "MMR014015",
+  "name": "Kyethi"
+  },
+  {//
+  "pcode": "MMR014017",
+  "name": "Monghsu"
+  }
+];
+  
+var srDistricts = [
+  {//
+  "pcode": "MMR002003",
+  "name": "Hpruso"
+  },
+  {//
+  "pcode": "MMR014002",
+  "name": "Nyaungshwe"
+  },
+  {// 
+  "pcode": "MMR014015",
+  "name": "Kyethi"
+  },
+  {//
+  "pcode": "MMR014017",
+  "name": "Monghsu"
+  },
+  {//
+  "pcode": "MMR016001",
+  "name": "Kengtung"
+  }
+];
+  
+var amyothaDistricts = [
+  {//
+  "pcode": "MMR004HLA003",
+  "name": "Chin-3"
+  },
+  {//
+  "pcode": "MMR007HLA004",
+  "name": "Bago-4"
+  },
+  {// 
+  "pcode": "MMR013HLA006",
+  "name": "Yangon-6"
+  }
+];  
+
+var pyithuDistrictsPc = pyithuDistricts.map(function(d){return d.pcode;});
+var srDistrictsPc = srDistricts.map(function(d){return d.pcode;});
+var amyothaDistrictsPc = amyothaDistricts.map(function(d){return d.pcode;});
+
+
+var currentMap = "state/region";
+
+  
+//////// Tooltip Div /////////
+
+  
+var divTt = d3.select("body").append("div")	
+    .attr("class", "tooltip")
+    .attr("stroke", "black")	
+    .style("opacity", 0);  
+  
+//////// Legend Inset /////////
+
+var legendHeight,
+    svgLegendInset,
+    legendYScaleColorsInset,
+    legendYAxisColorsInset;
+    
+  
+function getLegendInsetColors(place) {
+  var returnList = {};
+  
+//    console.log(media);
+  for (p in media) {
+    if (media[p].place == place) {
+      for (d in media[p].distroCities) {
+        if (Object.keys(returnList).indexOf(media[p].distroCities[d].type) < 0) 
+          returnList[media[p].distroCities[d].type] = "lightblue";
+      }
+    }
+  }
+  
+  return returnList;
+}   
+  
+function yangonInsetOnChange() {
+  yangonInsetTsp
+    .attr("class", setTspInsetClass)
+    .on("mouseover", setTspInsetMouseover)
+}
+  
+function tspMapOnChange() {
+  tspMap
+    .attr("class", setTspClass)
+    .on("mouseover", setTspMouseover)
+}  
+  
+  
+//console.log(getLegendInsetColors('Buthidaung'));
+  
+  ////// Read Data /////////////////////////////////////////
+
+d3.csv("data/2017ByElectionCandidates.csv", function(error1, electionData) {
+d3.json("data/myanmar_tsp.json", function(error2, mm_tsp) {
+d3.json("data/myanmar_sr.json", function(error3, mm_sr) {
+d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
+  if (error1) return console.error(error1);
+  if (error2) return console.error(error2);
+  if (error3) return console.error(error3);
+  if (error4) return console.error(error4);
+  
+  ///// Read Dataset ////////
+  
+  var dobFormat = d3.time.format("%m/%d/%Y");
+  
+ 
+  var nodes = electionData.map(function(datarow, i) {
+//  console.log(datarow);
+  return {
+    id: datarow.candidate_id,
+    election: datarow.election,
+    name: datarow.honorific + " " + datarow.name,
+    party: datarow.party,
+    partyShort: datarow.party_short,
+    dob: dobFormat(new Date(datarow.birthdate_orig)),
+    age: +datarow.age,
+    education: datarow.education,
+    ethnicity: datarow.ethnicity,
+    religion: datarow.religion,
+    house: datarow.house,
+    gender: datarow.gender,
+    occupation: datarow.occupation,
+    photoUrl: datarow.photo_url,
+    votes: +datarow.votes,
+    votesTtl: +datarow.total_votes,
+    pcode: function(d) {
+      if (d.AM_PCODE == "")
+        return d.TS_PCODE;
+      else
+        return d.AM_PCODE;
+    }(datarow),
+    cName: function(d) {
+      if (d.AM_PCODE == "")
+        return datarow.constituency_name;
+      else 
+        return datarow.constituency_name 
+         + " - " + datarow.constituency_number;
+    }(datarow),
+    cNum: datarow.constituency_number,
+    state: datarow.state
+  };
+});
+  
+  
+  
+  console.log(electionData);
+  console.log(nodes);
+  
+  
+   // nest by
+  // - house
+  // - location
+  // - year
+  // - party
+  var nestedData = d3.nest()
+    .key(function(d) { return d.house; })
+    .key(function(d) { return d.pcode; })
+    .key(function(d) { return d.election; })
+    .key(function(d) { return d.party; })
+    .entries(nodes);
+  
+  console.log(nestedData);
+  
+  for (i in amyotha_json.objects.amyotha.geometries) {
+//    console.log(amyotha.objects.amyotha.geometries[i].properties.pcode.split("\n"));
+    amyotha_json.objects.amyotha.geometries[i].properties.pcode = amyotha_json.objects.amyotha.geometries[i].properties.pcode.split("\r")[0];
+  }
+  
+//  console.log(amyotha_json.objects.amyotha.geometries);
+  
+//  var count = 0;
+
+
+  ///// Draw Map /////////////////////////////////////////
+
+  var sr = topojson.feature(mm_sr, mm_sr.objects.states_regions);
+  var tsp = topojson.feature(mm_tsp, mm_tsp.objects.townships);
+  //var rakhine_vt = topojson.feature(rakhine, rakhine.objects.rakhine_vt);
+  
+  
+  var excludeTs = [
+    "MMR013005",
+    "MMR013004",
+    "MMR013003",
+    "MMR013006",
+    "MMR013027",
+    "MMR013028",
+    "MMR013029",
+    "MMR013024",
+    "MMR013025",
+    "MMR013026",
+    "MMR013004",
+    "MMR013023",
+    "MMR013030",
+    "MMR013031"
+  ];
+  
+  var excludeAmyotha = [
+    "MMR013HLA012",
+    "MMR013HLA009",
+    "MMR013HLA008",
+    "MMR013HLA007"
+  ];
+  
+  
+  var yangonElectionTs = [
+    "MMR013008",
+    "MMR013020",
+    "MMR013021"
+  ];
+  
+  var yangonElectionAmyotha = [
+    "MMR013HLA006"
+  ];
+
+    var cellName = "#cell0";
+    var mapWidth = subWidth;
+    var mapHeight = subHeight;
+    var scaleFactor = 1.0;
+
+  /////// ------------ MAP ------------ ////////
+  
+    svgSubMaps.m = d3.select(cellName).append("svg")
+      .attr("width", mapWidth)
+      .attr("height", mapHeight);
+
+    var centerPoint = [];
+    var dLon, dLat;
+    dLon = dLat = 0;
+
+    // Naypyitaw
+    centerPoint.push(96.18566);
+    centerPoint.push(19.80326);
+
+    var scaleX = 1000*scaleFactor;
+
+    var projection = d3.geo.mercator()
+        .center(centerPoint)
+        .scale(scaleX)
+        .translate([mapWidth/2, mapHeight/2]);
+
+  function setInfoCell(d) {
+    console.log(d);
+
+    var pcode;
+    if (currentMap == "amyotha")
+      pcode = d.properties.pcode;
+    else
+      pcode = d.properties[" ts_pcode"];
+ 
+    var candidates = nestedData
+      .filter(function(d) { return d.key == currentMap;})[0].values
+      .filter(function(d) { return d.key == pcode;})[0].values
+      .filter(function(d) { return d.key == "2017";})[0].values;
+    console.log(candidates);  
+    
+    var div = document.getElementById("infoCellTitle");
+    div.innerHTML = "<b><div style='text-align: left'>" 
+      + candidates[0].values[0].cName.toUpperCase() 
+      + "</b></div><br/>";
+    
+    for (p in candidates) {
+      div.innerHTML += "<br/>";
+      div.innerHTML += "<div style='text-align: left'><i>" + candidates[p].key + "</i></div>";   
+      div.innerHTML += "<div style='text-align: left' class='person' " +
+        "onmouseover=\"toolTipMouseOver('" + candidates[p].values[0].id + "',event)\" " +
+        "onmouseout=\"toolTipMouseOut('" + candidates[p].values[0].id + "',event)\"> " + candidates[p].values[0].name + "</div>"; 
+      
+      
+      if (candidates[p].values.length > 1) {
+        
+        console.log(candidates[p].values[1].name);
+        div.innerHTML += "<div style='text-align: left' class='person' " +
+        "onmouseover=\"toolTipMouseOver('" + candidates[p].values[1].id + "',event)\" " +
+        "onmouseout=\"toolTipMouseOut('" + candidates[p].values[1].id + "',event)\"> " + candidates[p].values[1].name + "</div>";
+      }
+    }
+    
+    
+  }
+    
+
+
+  //// States and Regions
+
+  var path = d3.geo.path()
+    .projection(projection);
+
+  svgSubMaps.m.append("g").selectAll(".sr")
+    .data(topojson.feature(mm_sr, mm_sr.objects.states_regions).features)
+  .enter().append("path")
+    .attr("class", function(d) { 
+      return "sr " + d.properties.st; 
+    })
+    .attr("d", path);
+  
+  ////   Pyithu and State/Region Districts
+
+  setTspClass = function(d) { 
+    var comparisonPcodes;
+    if (currentMap == "pyithu") 
+      comparisonPcodes = pyithuDistrictsPc;
+    else 
+      comparisonPcodes = srDistrictsPc;
+      
+    if (comparisonPcodes.indexOf(d.properties[" ts_pcode"]) > -1 &
+      yangonElectionTs.indexOf(d.properties[" ts_pcode"]) < 0) {
+      return "tsp " + d.properties[" ts_pcode"] + " selectable";
+    }
+    return "tsp " + d.properties[" ts_pcode"]; 
+    
+    
+  }; 
+  
+  setTspMouseover = function(d) {
+    var comparisonPcodes;
+    if (currentMap == "pyithu") 
+      comparisonPcodes = pyithuDistrictsPc;
+    else 
+      comparisonPcodes = srDistrictsPc;
+    
+    if (comparisonPcodes.indexOf(d.properties[" ts_pcode"]) > -1 &
+      yangonElectionTs.indexOf(d.properties[" ts_pcode"]) < 0) {
+      d3.select(this).style('fill', mapFillColor);
+      
+      setInfoCell(d);
+    };
+    
+  }
+  
+  var pathTsp = d3.geo.path()
+  .projection(projection);
+
+  tspMap = svgSubMaps.m.append("g")
+  .selectAll(".tsp")
+  .data(topojson.feature(mm_tsp, mm_tsp.objects.townships).features)
+  .enter().append("path")
+  .attr("class", setTspClass)
+  .on("mouseover", setTspMouseover)
+  .on("mouseout", function(d) {
+      d3.select(this).style('fill', mapBlankColor);
+  })
+  .attr("d", pathTsp);
+  
+  ////   Amyotha Districts
+
+  setAmyothaClass = function(d) { 
+      
+    if (amyothaDistrictsPc.indexOf(d.properties.pcode) > -1 &
+      yangonElectionAmyotha.indexOf(d.properties.pcode) < 0) {
+//      console.log(d);
+      return "amyotha " + d.properties.pcode + " selectable";
+    }
+    return "amyotha " + d.properties.pcode; 
+  }; 
+  
+  setAmyothaMouseover = function(d) {
+    
+    if (amyothaDistrictsPc.indexOf(d.properties.pcode) > -1 &
+      yangonElectionAmyotha.indexOf(d.properties.pcode) < 0) {
+      d3.select(this).style('fill', mapFillColor);
+      
+      setInfoCell(d);
+    };
+  }
+
+
+  amyothaMap = svgSubMaps.m.append("g")
+  .selectAll(".amyotha")
+  .data(topojson.feature(amyotha_json, amyotha_json.objects.amyotha).features)
+  .enter().append("path")
+  .attr("class", setAmyothaClass)
+  .on("mouseover", setAmyothaMouseover)
+  .on("mouseout", function(d) {
+      d3.select(this).style('fill', mapBlankColor);
+  })
+  .attr("d", pathTsp);
+  
+  
+  ////   Yangon Inset
+  
+  svgSubMaps.m.append("rect")
+    .attr("width", 100)
+    .attr("height", 100)
+    .attr("class","mapContainer")
+    .attr("transform", "translate("+mapWidth*0.03+","+mapHeight*0.675+")");
+  
+  svgSubMaps.m.append("text")
+    .attr("transform", "translate("+mapWidth*0.15+","+mapHeight*0.671+")")
+    .attr("class","subunit-label")
+    .text("YANGON");
+      
+  
+  
+  var ygnFeatures = topojson.feature(mm_tsp, mm_tsp.objects.townships).features.filter(
+  function(d) {
+    return d.properties.st == "Yangon" 
+      & excludeTs.indexOf(d.properties[" ts_pcode"]) < 0; 
+  });
+  
+  var ygnFeaturesAmyotha = topojson.feature(amyotha_json, amyotha_json.objects.amyotha).features
+  .filter(function(d) {
+    return d.properties.pcode.includes("MMR013") 
+      & excludeAmyotha.indexOf(d.properties.pcode) < 0; 
+  });
+  
+//  console.log(ygnFeaturesAmyotha);
+  
+  var centerPointYgn = [];
+  var dLon, dLat;
+  dLon = dLat = 0;
+
+  // Yangon
+  centerPointYgn.push(96.156831);
+  centerPointYgn.push(16.783656);
+
+  var scaleX = 14000*scaleFactor;
+
+  var projectionYgn = d3.geo.mercator()
+      .center(centerPointYgn)
+      .scale(scaleX)
+      .translate([mapWidth*0.25, mapHeight*0.845]);
+  
+  var pathYgn = d3.geo.path()
+  .projection(projectionYgn);
+  
+  
+  // Yangon Inset for Pyithu and SR
+  
+  setTspInsetClass = function(d) { 
+    var comparisonPcodes;
+    if (currentMap == "pyithu") 
+      comparisonPcodes = pyithuDistrictsPc;
+    else 
+      comparisonPcodes = srDistrictsPc;
+      
+    if (comparisonPcodes.indexOf(d.properties[" ts_pcode"]) > -1) {
+      return "tspInset " + d.properties[" ts_pcode"] + " selectable";
+    }
+    return "tspInset " + d.properties[" ts_pcode"]; 
+    
+  }; 
+  
+  setTspInsetMouseover = function(d) {
+    var comparisonPcodes;
+    if (currentMap == "pyithu") 
+      comparisonPcodes = pyithuDistrictsPc;
+    else 
+      comparisonPcodes = srDistrictsPc;
+    
+    if (comparisonPcodes.indexOf(d.properties[" ts_pcode"]) > -1) {
+      d3.select(this).style('fill', mapFillColor);
+      setInfoCell(d);
+    }
+  }
+  
+  yangonInsetTsp = svgSubMaps.m.append("g")
+    .selectAll(".tspInset")
+  .data(ygnFeatures)
+  .enter().append("path")
+  .attr("class", setTspInsetClass)
+  .on("mouseover", setTspInsetMouseover)
+  .on("mouseout", function(d) {
+      d3.select(this).style('fill', mapBlankColor);
+  })
+  .attr("d", pathYgn);
+
+  // Yangon Inset for Amyotha
+  
+  setAmyothaInsetClass = function(d) { 
+      
+    if (amyothaDistrictsPc.indexOf(d.properties.pcode) > -1) {
+      return "amyothaInset " + d.properties.pcode + " selectable";
+    }
+    return "amyothaInset " + d.properties.pcode; 
+  }; 
+  
+  setAmyothaInsetMouseover = function(d) {
+    
+    if (amyothaDistrictsPc.indexOf(d.properties.pcode) > -1) {
+      d3.select(this).style('fill', mapFillColor);
+      
+      setInfoCell(d);
+    }
+  }
+  
+  yangonInsetAmyotha = svgSubMaps.m.append("g")
+    .selectAll(".amyothaInset")
+  .data(ygnFeaturesAmyotha)
+  .enter().append("path")
+  .attr("class", setAmyothaInsetClass)
+  .on("mouseover", setAmyothaInsetMouseover)
+  .on("mouseout", function(d) {
+      d3.select(this).style('fill', mapBlankColor);
+  })
+  .attr("d", pathYgn);
+  
+
+
+  /////// ------------ CHART ------------ ////////
+      
+  viz = d3.select(cellName).append("svg")
+    .attr("width", mapWidth*1.5)
+    .attr("height", mapHeight-100)
+    .style("display","none");
+  
+//  viz.append("g")
+//    .append("text")
+//    .style("width", "300")
+//    .style("height", "50")
+//    .attr("class","subunit-label")
+//    .attr("transform", "translate("+150+","+50+")")
+//    .text("Chin State");
+
+  
+  //// Button Controls ////////////////////////////////////////////////
+
+  clickPyithu();
+  
+  function clickPyithu() {
+        d3.selectAll(".amyotha")
+      .style("display","none");
+    
+    d3.selectAll(".amyothaInset")
+      .style("display","none");
+    
+    d3.selectAll(".tsp")
+      .style("display","inline");
+    
+    d3.selectAll(".tspInset")
+      .style("display","inline");
+    
+    currentMap = "pyithu";
+    
+    yangonInsetOnChange();
+    tspMapOnChange();
+
+    var div = document.getElementById("houseLabel");
+    div.innerHTML = "<br/>Pyithu Hluttaw Districts";
+  }  
+  
+  d3.selectAll("#updateButtonPyithu")
+  .on("click", function(d) {
+    clickPyithu();
+  });
+  
+  d3.selectAll("#updateButtonSR")
+  .on("click", function(d) {
+    d3.selectAll(".amyotha")
+      .style("display","none");
+    
+    d3.selectAll(".amyothaInset")
+      .style("display","none");
+    
+    d3.selectAll(".tsp")
+      .style("display","inline");
+    
+    d3.selectAll(".tspInset")
+      .style("display","inline");
+    
+    currentMap = "state/region";
+    
+    yangonInsetOnChange();
+    tspMapOnChange();
+    
+    
+    var div = document.getElementById("houseLabel");
+    div.innerHTML = "<br/>State/Region Hluttaw Districts";
+  });  
+  
+  d3.selectAll("#updateButtonAmyotha")
+  .on("click", function(d) {
+    d3.selectAll(".amyotha")
+      .style("display","inline");
+    
+    d3.selectAll(".amyothaInset")
+      .style("display","inline");
+    
+    d3.selectAll(".tsp")
+      .style("display","none");
+    
+    d3.selectAll(".tspInset")
+      .style("display","none");
+    
+    
+    currentMap = "amyotha";
+    
+    var div = document.getElementById("houseLabel");
+    div.innerHTML = "<br/>Amyotha Hluttaw Districts";
+  });  
+  
+  
+  //// Tooltip ////////////////////////////////////////////////////
+  
+  function getPos(e){
+    x=e.clientX;
+    y=e.clientY;
+    cursor="Your Mouse Position Is : " + x + " and " + y ;
+    document.getElementById("displayArea").innerHTML=cursor
+  }
+
+  
+  toolTipMouseOver = function(id,e) {
+    
+//    d3.select(this)
+//        .style("stroke", "black")
+//        .style("stroke-width", "3px");
+      
+      
+      var content = "";
+      
+    
+      var x=e.clientX;
+      var y=e.clientY;
+    
+      var d = nodes.filter(function(d) {
+        if (d.id == id) return true;
+        else return false;
+      })[0];
+      
+      console.log(d);
+      
+//    "10/30/1974"
+//education
+//ethnicity
+//gender
+//occupation
+//photoUrl
+//religion
+    
+//      content = "<img src=> " + d.photourl + "</h3><br/>";
+//      content = "<span class=\"name\">Name:</span><span class=\"value\"> " + d.name + "</span><br/>";
+      content += "<span class=\"name\">Age:</span><span class=\"value\"> " + d.age + "</span><br/>";
+      content += "<span class=\"name\">Date of Birth:</span><span class=\"value\"> " + d.dob + "</span><br/>";
+      content += "<span class=\"name\">Education:</span><span class=\"value\"> " + d.education + "</span><br/>";
+      content += "<span class=\"name\">Ethnicity:</span><span class=\"value\"> " + d.ethnicity + "</span><br/>";
+      content += "<span class=\"name\">Gender:</span><span class=\"value\"> " + d.gender + "</span><br/>";
+      content += "<span class=\"name\">Occupation:</span><span class=\"value\"> " + d.occupation + "</span><br/>";
+      content += "<span class=\"name\">Religion:</span><span class=\"value\"> " + d.religion + "</span><br/>";
+      
+    divTt.transition()		
+      .duration(100)		
+      .style("display", "inline")
+      .style("position", "absolute")
+      .style("opacity", .9);
+
+//    if (d3.event.pageX + 200 < width) {
+    divTt.html(content)	
+      .style("left", (x + 30) + "px")		
+      .style("top", (y - 28) + "px");	  
+//    } else {
+//      divTt.html(content)	
+//      .style("left", (d3.event.pageX - 230) + "px")		
+//      .style("top", (d3.event.pageY - 28) + "px");	  
+//    }
+
+    
+  }
+  				
+      
+  toolTipMouseOut = function (d) {
+//      if (!d.toggle)
+//        d3.select(this)
+//          .style("fill", d.color)
+//          .style("stroke", "none");
+
+//        console.log(div);
+
+    divTt.transition()		
+      .duration(100)	
+      .style("display", "none")
+      .style("opacity", 0);	
+  }
+        
+        
+//  d3.selectAll(".person")
+//    .on("mouseover", function(d) {
+//      console.log(d);
+//    })
+//    .on("mouseout", toolTipMouseOut);
+  
+  //// Annotations ////////////////////////////////////////////////
+  
+  
+
+  
+
+
+
+})})})});
+  
+</script>
