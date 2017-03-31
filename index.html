@@ -14,6 +14,23 @@ body {
   color: #CF232B;
   cursor: default;
 }
+  
+.personDetail {
+  display: none;
+  text-align: left;
+}  
+  
+.name {
+  font-weight:bold;
+  display: inline;
+  text-align: left;
+}  
+  
+.value {
+  display: inline;
+  text-align: left;
+} 
+  
 
 .sr {
   fill: none;
@@ -76,6 +93,8 @@ body {
 .tooltip .name {
   font-weight:bold;
 }
+  
+
   
 /*
 .sr.Ayeyarwady { fill: #8dd3c7; }
@@ -721,17 +740,54 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
     for (p in candidates) {
       div.innerHTML += "<br/>";
       div.innerHTML += "<div style='text-align: left'><i>" + candidates[p].key + "</i></div>";   
-      div.innerHTML += "<div style='text-align: left' class='person' " +
-        "onmouseover=\"toolTipMouseOver('" + candidates[p].values[0].id + "',event)\" " +
-        "onmouseout=\"toolTipMouseOut('" + candidates[p].values[0].id + "',event)\"> " + candidates[p].values[0].name + "</div>"; 
+      div.innerHTML += "<div style='text-align: left' class='person'" 
+//        + "onmouseover=\"toolTipMouseOver('" + candidates[p].values[0].id + "',event)\" "
+//        + "onmouseout=\"toolTipMouseOut('" + candidates[p].values[0].id + "',event)\" "         
+        + "onclick=\"toolTipMouseClick('" + candidates[p].values[0].id + "',event)\" >"
+        + candidates[p].values[0].name + "</div>"; 
+      
+      var c = candidates[p].values[0];
+      
+      content = ""
+      content += "<div class=\"name\">Age:</div><div class=\"value\"> " + c.age + "</div><br/>";
+      content += "<div class=\"name\">Date of Birth:</div><div class=\"value\"> " + c.dob + "</div><br/>";
+      content += "<div class=\"name\">Education:</div><div class=\"value\"> " + c.education + "</div><br/>";
+      content += "<div class=\"name\">Ethnicity:</div><div class=\"value\"> " + c.ethnicity + "</div><br/>";
+      content += "<div class=\"name\">Gender:</div><div class=\"value\"> " + c.gender + "</div><br/>";
+      content += "<div class=\"name\">Occupation:</div><div class=\"value\"> " + c.occupation + "</div><br/>";
+      content += "<div class=\"name\">Religion:</div><div class=\"value\"> " + c.religion + "</div><br/>";
+      content += "<br/>";
+      
+      div.innerHTML += "<div style='text-align: left' class='personDetail' id='" 
+        + candidates[p].values[0].id + "' >" 
+        + content + "</div>"; 
       
       
       if (candidates[p].values.length > 1) {
         
         console.log(candidates[p].values[1].name);
-        div.innerHTML += "<div style='text-align: left' class='person' " +
-        "onmouseover=\"toolTipMouseOver('" + candidates[p].values[1].id + "',event)\" " +
-        "onmouseout=\"toolTipMouseOut('" + candidates[p].values[1].id + "',event)\"> " + candidates[p].values[1].name + "</div>";
+        div.innerHTML += "<div style='text-align: left' class='person' "
+//        + "onmouseover=\"toolTipMouseOver('" + candidates[p].values[1].id + "',event)\" "
+//        + "onmouseout=\"toolTipMouseOut('" + candidates[p].values[1].id + "',event)\" "
+        + "onclick=\"toolTipMouseClick('" + candidates[p].values[1].id + "',event)\" >" 
+        + candidates[p].values[1].name + "</div>";
+        
+        var c = candidates[p].values[1];
+
+        content = ""
+        content += "<div class=\"name\">  Age:</div><div class=\"value\"> " + c.age + "</div><br/>";
+        content += "<div class=\"name\">  Date of Birth:</div><div class=\"value\"> " + c.dob + "</div><br/>";
+        content += "<div class=\"name\">  Education:</div><div class=\"value\"> " + c.education + "</div><br/>";
+        content += "<div class=\"name\">  Ethnicity:</div><div class=\"value\"> " + c.ethnicity + "</div><br/>";
+        content += "<div class=\"name\">  Gender:</div><div class=\"value\"> " + c.gender + "</div><br/>";
+        content += "<div class=\"name\">  Occupation:</div><div class=\"value\"> " + c.occupation + "</div><br/>";
+        content += "<div class=\"name\">  Religion:</div><div class=\"value\"> " + c.religion + "</div><br/>";
+        content += "<br/>";
+        
+        
+        div.innerHTML += "<div style='text-align: left' class='personDetail' id='" 
+          + candidates[p].values[1].id + "' >" 
+          + content + "</div>"; 
       }
     }
     
@@ -959,7 +1015,7 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
   /////// ------------ CHART ------------ ////////
       
   viz = d3.select(cellName).append("svg")
-    .attr("width", mapWidth*1.5)
+    .attr("width", mapWidth*1)
     .attr("height", mapHeight-100)
     .style("display","none");
   
@@ -1079,16 +1135,7 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
       
       console.log(d);
       
-//    "10/30/1974"
-//education
-//ethnicity
-//gender
-//occupation
-//photoUrl
-//religion
-    
-//      content = "<img src=> " + d.photourl + "</h3><br/>";
-//      content = "<span class=\"name\">Name:</span><span class=\"value\"> " + d.name + "</span><br/>";
+
       content += "<span class=\"name\">Age:</span><span class=\"value\"> " + d.age + "</span><br/>";
       content += "<span class=\"name\">Date of Birth:</span><span class=\"value\"> " + d.dob + "</span><br/>";
       content += "<span class=\"name\">Education:</span><span class=\"value\"> " + d.education + "</span><br/>";
@@ -1096,12 +1143,22 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
       content += "<span class=\"name\">Gender:</span><span class=\"value\"> " + d.gender + "</span><br/>";
       content += "<span class=\"name\">Occupation:</span><span class=\"value\"> " + d.occupation + "</span><br/>";
       content += "<span class=\"name\">Religion:</span><span class=\"value\"> " + d.religion + "</span><br/>";
-      
+
+//    content += "<div class=\"name\">Age:</div><div class=\"value\"> " + d.age + "</div><br/>";
+//    content += "<div class=\"name\">Date of Birth:</div><div class=\"value\"> " + d.dob + "</div><br/>";
+//    content += "<div class=\"name\">Education:</div><div class=\"value\"> " + d.education + "</div><br/>";
+//    content += "<div class=\"name\">Ethnicity:</div><div class=\"value\"> " + d.ethnicity + "</div><br/>";
+//    content += "<div class=\"name\">Gender:</div><div class=\"value\"> " + d.gender + "</div><br/>";
+//    content += "<div class=\"name\">Occupation:</div><div class=\"value\"> " + d.occupation + "</div><br/>";
+//    content += "<div class=\"name\">Religion:</div><div class=\"value\"> " + d.religion + "</div><br/>";
+    
     divTt.transition()		
       .duration(100)		
       .style("display", "inline")
       .style("position", "absolute")
       .style("opacity", .9);
+    
+    divTt.innerHTML += content; 
 
 //    if (d3.event.pageX + 200 < width) {
     divTt.html(content)	
@@ -1116,7 +1173,7 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
     
   }
   				
-      
+   
   toolTipMouseOut = function (d) {
 //      if (!d.toggle)
 //        d3.select(this)
@@ -1129,6 +1186,29 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
       .duration(100)	
       .style("display", "none")
       .style("opacity", 0);	
+  }
+  
+  toolTipMouseClick = function (d) {
+//      if (!d.toggle)
+//        d3.select(this)
+//          .style("fill", d.color)
+//          .style("stroke", "none");
+
+//        console.log(div);
+      console.log(d);
+      var x = document.getElementsByClassName("personDetail");
+      var i;
+      for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+      }
+      
+      var y = document.getElementById(d);
+      console.log(y.style.display);
+      
+      if (y.style.display == "none")
+        y.style.display = "block";
+      else 
+        y.style.display = "none";
   }
         
         
