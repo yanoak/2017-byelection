@@ -735,7 +735,7 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
     var div = document.getElementById("infoCellTitle");
     div.innerHTML = "<b><div style='text-align: left'>" 
       + candidates[0].values[0].cName.toUpperCase() 
-      + "</b></div><br/>";
+      + "</b><br/>(Click on candidate names for more details)</br></div>";
     
     for (p in candidates) {
       div.innerHTML += "<br/>";
