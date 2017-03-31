@@ -750,7 +750,7 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
       
       content = ""
       content += "<div class=\"name\">Age:</div><div class=\"value\"> " + c.age + "</div><br/>";
-      content += "<div class=\"name\">Date of Birth:</div><div class=\"value\"> " + c.dob + "</div><br/>";
+      content += "<div class=\"name\">Date of Birth:</div><div class=\"value\"> " +  d3.time.format("%e %b %Y")(new Date(c.dob)) + "</div><br/>";
       content += "<div class=\"name\">Education:</div><div class=\"value\"> " + c.education + "</div><br/>";
       content += "<div class=\"name\">Ethnicity:</div><div class=\"value\"> " + c.ethnicity + "</div><br/>";
       content += "<div class=\"name\">Gender:</div><div class=\"value\"> " + c.gender + "</div><br/>";
@@ -776,7 +776,7 @@ d3.json("data/amyotha-topo.json", function(error4, amyotha_json) {
 
         content = ""
         content += "<div class=\"name\">  Age:</div><div class=\"value\"> " + c.age + "</div><br/>";
-        content += "<div class=\"name\">  Date of Birth:</div><div class=\"value\"> " + c.dob + "</div><br/>";
+        content += "<div class=\"name\">  Date of Birth:</div><div class=\"value\"> " + d3.time.format("%e %b %Y")(new Date(c.dob)) + "</div><br/>";
         content += "<div class=\"name\">  Education:</div><div class=\"value\"> " + c.education + "</div><br/>";
         content += "<div class=\"name\">  Ethnicity:</div><div class=\"value\"> " + c.ethnicity + "</div><br/>";
         content += "<div class=\"name\">  Gender:</div><div class=\"value\"> " + c.gender + "</div><br/>";
